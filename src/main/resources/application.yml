@@ -16,3 +16,6 @@ spring:
       ddl-auto: none
     show-sql: true
     open-in-view: false
+  messages:
+    basename: messages
+    encoding: UTF-8

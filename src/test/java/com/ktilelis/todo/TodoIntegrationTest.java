@@ -31,7 +31,7 @@ public class TodoIntegrationTest {
 
     @Container
     @ServiceConnection
-    private static final PostgreSQLContainer<?> DB_CONTAINER = new PostgreSQLContainer<>("postgres:17:alpine");
+    private static final PostgreSQLContainer<?> DB_CONTAINER = new PostgreSQLContainer<>("postgres:17.5-alpine");
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -58,9 +58,9 @@ public class TodoIntegrationTest {
         });
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getTotalPages()).isEqualTo(1);
-        assertThat(response.getBody().getTotalElements()).isEqualTo(2);
-        assertThat(response.getBody().getContent().size()).isEqualTo(2);
+        assertThat(response.getBody().page().totalPages()).isEqualTo(1);
+        assertThat(response.getBody().page().totalElements()).isEqualTo(2);
+        assertThat(response.getBody().content().size()).isEqualTo(2);
     }
 
     @Test
@@ -141,8 +141,8 @@ public class TodoIntegrationTest {
         assertThat(pagedResults.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         var responseBody = pagedResults.getBody();
-        assertThat(responseBody.getTotalElements()).isEqualTo(1);
-        var todoId = responseBody.getContent().get(0).id();
+        assertThat(responseBody.page().totalElements()).isEqualTo(1);
+        var todoId = responseBody.content().get(0).id();
         final var todoForUpdate = new TodoRequestDto("natalia", "natalia quote updated", null);
 
         final var entity = new HttpEntity<>(todoForUpdate);
@@ -167,8 +167,8 @@ public class TodoIntegrationTest {
         assertThat(pagedResults.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         var responseBody = pagedResults.getBody();
-        assertThat(responseBody.getTotalElements()).isEqualTo(1);
-        var todoId = responseBody.getContent().get(0).id();
+        assertThat(responseBody.page().totalElements()).isEqualTo(1);
+        var todoId = responseBody.content().get(0).id();
         final var response = restTemplate.exchange(BASE_URL + "/" + todoId, HttpMethod.DELETE, null, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }

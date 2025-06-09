@@ -55,8 +55,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<TodoApiException> handleGeneric(Exception ex, Locale locale) {
         UUID uuid = UUID.randomUUID();
-        String errorMessage = String.format(this.messageSource.getMessage("exception.generic_error", new Object[]{uuid}, Locale.getDefault()));
-        var ae = new TodoApiException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+        var errorMessage = this.messageSource.getMessage("exception.generic_error", new Object[]{uuid.toString()}, Locale.getDefault());
+        var ae = new TodoApiException(uuid, errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         logger.error(uuid + " " + ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ae);
     }
