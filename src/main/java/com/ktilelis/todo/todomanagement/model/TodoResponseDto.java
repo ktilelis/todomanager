@@ -1,13 +1,14 @@
 package com.ktilelis.todo.todomanagement.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 public record TodoResponseDto(
         Long id,
         String title,
         String description,
-        Boolean isDone,
-        OffsetDateTime expiresAt,
-        OffsetDateTime createdAt,
-        OffsetDateTime updatedAt
-) {}
+        Boolean done,
+        LocalDateTime expiresAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
+}

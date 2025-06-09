@@ -3,6 +3,7 @@ package com.ktilelis.todo.todomanagement.model;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 public record TodoRequestDto(
@@ -13,5 +14,5 @@ public record TodoRequestDto(
         @Size(max = 500, message = "Description must be at most 500 characters")
         String description,
 
-        OffsetDateTime expiresAt
+        LocalDateTime expiresAt
 ) {}

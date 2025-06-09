@@ -51,7 +51,9 @@ public class TodoService {
 
     @Transactional(readOnly = true)
     public TodoResponseDto getTodoById(Long id) {
-        return this.mapper.toDto(this.getTodo(id));
+        var todo = this.getTodo(id);
+        var mapped = this.mapper.toDto(todo);
+        return mapped;
     }
 
     public void deleteTodo(Long id) {

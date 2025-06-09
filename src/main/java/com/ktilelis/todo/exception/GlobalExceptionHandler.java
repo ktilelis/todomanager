@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<TodoApiException> handleNotFound(NoSuchElementException ex) {
-        var ae = TodoApiException.builder().httpStatus(HttpStatus.NOT_FOUND).message(ex.getMessage()).build();
+        var ae = new TodoApiException(ex.getMessage(), HttpStatus.NOT_FOUND);
 
         logger.warn(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae);
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<TodoApiException> handleGeneric(Exception ex, Locale locale) {
         UUID uuid = UUID.randomUUID();
         String errorMessage = String.format(this.messageSource.getMessage("exception.generic_error", new Object[]{uuid}, Locale.getDefault()));
-        var ae = TodoApiException.builder().message(errorMessage).httpStatus(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        var ae = new TodoApiException(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         logger.error(uuid + " " + ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ae);
     }
