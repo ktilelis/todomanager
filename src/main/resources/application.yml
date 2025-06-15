@@ -1,6 +1,9 @@
 spring:
   application:
     name: todo
+  mvc:
+    favicon:
+      enabled: false
   docker:
     compose:
       enabled: false
